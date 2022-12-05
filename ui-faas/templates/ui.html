@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Home Page</title>
+</head>
+
+<body>
+  {% extends "template.html" %}
+  {% block content %}
+
+  <center><h1>FaaS-based Map Reduce - Inverted Index Search</h1></center>
+
+<div class="container">
+  <form>
+    <label for="inputWord">Input Word to Search</label>
+    <input type="text" id="inputWord" name="inputWord" placeholder="Your question..">
+
+    <label for="resultAnswer">Answer</label>
+    <textarea id="resultAnswer" name="resultAnswer" style="height:100px" value="" disabled></textarea>
+
+    <input type="button" value="Search" id="searchButton">
+  </form>
+</div>
+
+<script>
+  var searchButton = document.getElementById('searchButton');
+  searchButton.addEventListener("click", fetchData);
+
+  function fetchData() {
+    var requestParams = "?inputWord=" + document.getElementById("inputWord").value;
+    var requestURL = "https://ui-handler-cf-gf2co4zquq-uc.a.run.app" + requestParams;
+    console.log("Request URL", requestURL);
+    fetch(requestURL)
+    .then(response => response.json())
+    .then(result => {
+      console.log("result:", result)
+      document.getElementById("resultAnswer").value = JSON.stringify(result, null, 4);
+    })
+  }
+
+</script>
+
+  {% endblock %}
+</body>
+
+</html>
