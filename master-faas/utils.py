@@ -122,7 +122,9 @@ def combine_reducer_output_files():
         blob_content_bytes = blob.download_as_string()
         curr_reducer_output = json.loads(blob_content_bytes.decode("utf8"))
         for key, val in curr_reducer_output.items():
-            final_output[key] = val
+            if key not in final_output:
+                final_output[key] = []
+            final_output[key].extend(val)
     
     final_output = dict(sorted(final_output.items()))
     return final_output

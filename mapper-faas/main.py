@@ -8,14 +8,14 @@ CS_SERVICE_ACCOUNT_KEY_PATH = f"secrets/nirav-raje-fall2022-cloud-storage-84ed9d
 
 def invertedindex_map_init(dataset, mapper_id):
     print(f"[MAPPER - {mapper_id}] Inverted index mapping started...")
-    output = defaultdict(set)
+    output = defaultdict(list)
     for doc in dataset:
         for line in dataset[doc]:
             tokens = line.split()
             for token in tokens:
-                output["default_mapper_key"].add((token, doc))
-    for key, val in output.items():
-        output[key] = list(val)
+                output["default_mapper_key"].append((token, doc))
+    # for key, val in output.items():
+    #     output[key] = list(val)
     return output
 
 def get_dataset_from_cloud_storage(mapper_id):
